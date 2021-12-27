@@ -2,20 +2,58 @@
 https://docs.nestjs.com/controllers#controllers
 */
 
-import { Controller, Get, Query, Param } from '@nestjs/common';
-import { SampleService } from '../service/sample.service';
+import {
+  Controller,
+  Get,
+  Query,
+  Param,
+  Inject,
+  Res,
+  HttpStatus,
+} from '@nestjs/common';
+import { SampleApplication } from '../interface/applications/sample.application.interface';
+import { SAMPLE_TYPES } from '../interface/types';
 
 @Controller()
 export class SampleController {
-  constructor(private readonly sampleService: SampleService) {}
+  constructor(
+    @Inject(SAMPLE_TYPES.applications.SampleApplication)
+    private readonly sampleApplication: SampleApplication,
+  ) {}
 
   @Get('sample')
-  getSampleData(@Query('key') key: string): string {
-    return this.sampleService.getSampleData(key);
+  async getSampleData(@Res() res, @Query('key') key: string) {
+    try {
+      const sample = await this.sampleApplication.getSampleData(key);
+      return res.status(HttpStatus.OK).json({
+        statusCode: HttpStatus.OK,
+        data: sample,
+      });
+    } catch (err) {
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: err,
+      });
+    }
   }
 
   @Get('sample/:id')
-  getSampleData2(@Param('id') id: string, @Query('key') key: string): string {
-    return this.sampleService.getSampleData(id + key);
+  async getSampleData2(
+    @Res() res,
+    @Param('id') id: string,
+    @Query('key') key: string,
+  ) {
+    try {
+      const sample = await this.sampleApplication.getSampleData(id + key);
+      return res.status(HttpStatus.OK).json({
+        statusCode: HttpStatus.OK,
+        data: sample,
+      });
+    } catch (err) {
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: err,
+      });
+    }
   }
 }
