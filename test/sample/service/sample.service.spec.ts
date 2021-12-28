@@ -3,19 +3,27 @@ https://docs.nestjs.com/fundamentals/testing#unit-testing
 */
 
 import { Test } from '@nestjs/testing';
-import { SampleService } from '../../../src/sample/service/sample.service';
+import { SAMPLE_TYPES } from '../../../src/sample/interface/types';
+import { SampleServiceImpl } from '../../../src/sample/service/sample.service';
 
 describe('SampleService', () => {
-  let service: SampleService;
+  let service: SampleServiceImpl;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [], // Add
       controllers: [], // Add
-      providers: [SampleService], // Add
+      providers: [
+        {
+          provide: SAMPLE_TYPES.services.SampleService,
+          useClass: SampleServiceImpl,
+        },
+      ], // Add
     }).compile();
 
-    service = moduleRef.get<SampleService>(SampleService);
+    service = moduleRef.get<SampleServiceImpl>(
+      SAMPLE_TYPES.services.SampleService,
+    );
   });
 
   it('should be defined', () => {
@@ -24,7 +32,9 @@ describe('SampleService', () => {
 
   describe('getSampleData', () => {
     it('normal case', () => {
-      expect(service.getSampleData('test')).toBe('testsample');
+      service
+        .getSampleData('test')
+        .then((reslut) => expect(reslut).toBe('test:service:'));
     });
   });
 });
