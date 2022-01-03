@@ -21,10 +21,14 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const response = ctx.getResponse();
     const request = ctx.getRequest();
 
-    const [status, message, stack] =
+    const ex =
       exception instanceof HttpException
-        ? [exception.getStatus(), exception.message, exception.stack]
-        : [HttpStatus.INTERNAL_SERVER_ERROR];
+        ? {
+            status: exception.getStatus(),
+            message: exception.message,
+            stack: exception.stack,
+          }
+        : { status: HttpStatus.INTERNAL_SERVER_ERROR };
     // const status =
     //   exception instanceof HttpException
     //     ? exception.getStatus()
@@ -36,14 +40,14 @@ export class AllExceptionsFilter implements ExceptionFilter {
     //   this.logger.warn({ request, response });
     // }
 
-    response.status(status).json({
-      statusCode: status,
-      message: message,
+    response.status(ex.status).json({
+      statusCode: ex.status,
+      message: ex.message,
       timestamp: timezonedLocale,
       path: request.url,
-      stack: stack,
+      stack: ex.stack,
     });
-    if (status >= 500) {
+    if (ex.status >= 500) {
       this.logger.error(response);
     }
     this.logger.log('exec excepiton filter');

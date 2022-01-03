@@ -11,7 +11,7 @@ export class CusutomLoggerMiddleware implements NestMiddleware {
   private readonly logger = new Logger();
 
   use(req: Request, res: Response, next: NextFunction) {
-    const { ip, method, path: url } = req;
+    const { ip, method, path: url, body } = req;
     const userAgent = req.get('user-agent') || '';
 
     res.on('close', () => {
@@ -19,6 +19,7 @@ export class CusutomLoggerMiddleware implements NestMiddleware {
       const contentLength = res.get('content-length');
 
       this.logger.log(
+        body,
         `${method} ${url} ${statusCode} ${contentLength} - ${userAgent} ${ip}`,
       );
     });
