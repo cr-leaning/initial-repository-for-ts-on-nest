@@ -1,38 +1,65 @@
 import { Injectable, LoggerService, Scope } from '@nestjs/common';
 import { Format } from 'logform';
-import { createLogger, format, Logger, transport, transports } from 'winston';
+import { SERVICE_NAME } from 'src/constants/constats';
+import { timezonedLocale } from 'src/utils/date.utils';
+import { createLogger, format, Logger, transports } from 'winston';
 import * as DailyRotateFile from 'winston-daily-rotate-file';
 import * as Transport from 'winston-transport';
 
-const SERVICE_NAME = 'initial-repository';
-const appLogTransform: Transport = new DailyRotateFile({
-  level: 'info',
-  dirname: `log/app/`,
-  filename: `app_%DATE%.log`,
-  datePattern: 'YYYY-MM-DD',
-  zippedArchive: true,
-  maxFiles: '1d',
+const ratate = (transport: Transport): Transport =>
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  transport.on('rotate', () => {});
+const appLogTransform: Transport = ratate(
+  new DailyRotateFile({
+    level: 'info',
+    dirname: `log/app/`,
+    filename: `app_%DATE%.log`,
+    datePattern: 'YYYY-MM-DD',
+    zippedArchive: true,
+    maxFiles: '1d',
+  }),
+);
+const errLogTransform: Transport = ratate(
+  new DailyRotateFile({
+    level: 'error',
+    dirname: `log/err/`,
+    filename: `err_%DATE%.log`,
+    datePattern: 'YYYY-MM-DD',
+    zippedArchive: true,
+    maxFiles: '1d',
+  }),
+);
+const exceptionLogTransform: Transport = ratate(
+  new DailyRotateFile({
+    dirname: `log/err/`,
+    filename: `exception_%DATE%.log`,
+    datePattern: 'YYYY-MM-DD',
+    zippedArchive: true,
+    maxFiles: '1d',
+  }),
+);
+
+/**
+ * カスタム項目用（サンプル）
+ * ろくに動きません
+ */
+const hostname = format((info, opts = {}) => {
+  let value: string;
+
+  if (!opts.hostname) {
+    value = 'localhost';
+  } else {
+    value = opts.hostname;
+  }
+
+  if (!opts.alias) {
+    info.hostname = value;
+  } else {
+    info[opts.alias] = value;
+  }
+
+  return info;
 });
-const logErrTransform: Transport = new DailyRotateFile({
-  level: 'error',
-  dirname: `log/err/`,
-  filename: `err_%DATE%.log`,
-  datePattern: 'YYYY-MM-DD',
-  zippedArchive: true,
-  maxFiles: '1d',
-});
-const logExceptionTransform: Transport = new DailyRotateFile({
-  dirname: `log/err/`,
-  filename: `exception_%DATE%.log`,
-  datePattern: 'YYYY-MM-DD',
-  zippedArchive: true,
-  maxFiles: '1d',
-});
-const timezoned = () => {
-  return new Date().toLocaleString('ja-JP', {
-    timeZone: 'Asia/Tokyo',
-  });
-};
 
 // @Injectable({ scope: Scope.TRANSIENT })
 export class CustomLoggerService implements LoggerService {
@@ -45,53 +72,30 @@ export class CustomLoggerService implements LoggerService {
       defaultMeta: { service: SERVICE_NAME },
       transports: [
         new transports.Console({ level: 'debug' }),
-        this.logRotate(appLogTransform),
-        this.logRotate(logErrTransform),
+        appLogTransform,
+        errLogTransform,
       ],
       exceptionHandlers: [
         new transports.Console({ level: 'debug' }),
-        this.logRotate(logExceptionTransform),
+        exceptionLogTransform,
       ],
       handleExceptions: true,
       exitOnError: false,
     });
     this.logger.exceptions.handle(
       new transports.Console({ level: 'debug' }),
-      this.logRotate(logExceptionTransform),
+      exceptionLogTransform,
     );
   }
 
   logFormat(): Format {
     return format.combine(
-      format.timestamp({ format: timezoned }), // timestampを出力する
+      format.timestamp({ format: timezonedLocale }), // timestampを出力する
       format.splat(), // String interpolation splat for %d %s-style messages.
-      this.hostname(),
+      hostname(),
       format.errors({ stack: true }),
       format.json(),
     );
-  }
-
-  hostname = format((info, opts = {}) => {
-    let value: string;
-
-    if (!opts.hostname) {
-      value = 'localhost';
-    } else {
-      value = opts.hostname;
-    }
-
-    if (!opts.alias) {
-      info.hostname = value;
-    } else {
-      info[opts.alias] = value;
-    }
-
-    return info;
-  });
-
-  logRotate(transport: Transport): Transport {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    return transport.on('rotate', () => {});
   }
 
   info(message: string, ...option: any[]) {

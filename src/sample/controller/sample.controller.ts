@@ -17,7 +17,8 @@ export class SampleController {
 
   @Get('sample')
   getSampleData(@Query('key') key: string) {
-    this.logger.log('sample key', key);
+    this.logger.log({ 'sample key': key });
+    this.logger.log('sample key:%s', key);
     return this.sampleApplication.getSampleData(key).then((res) => res);
   }
 
