@@ -6,7 +6,7 @@ import { Controller, Get, Query, Param, Inject, Logger } from '@nestjs/common';
 import { SampleApplication } from '../interface/applications/sample.application.interface';
 import { SAMPLE_TYPES } from '../interface/types';
 
-@Controller()
+@Controller('sample')
 export class SampleController {
   private readonly logger = new Logger();
 
@@ -15,15 +15,15 @@ export class SampleController {
     private readonly sampleApplication: SampleApplication,
   ) {}
 
-  @Get('sample')
+  @Get()
   getSampleData(@Query('key') key: string) {
     this.logger.log({ 'sample key': key });
     this.logger.log('sample key:%s', key);
     return this.sampleApplication.getSampleData(key).then((res) => res);
   }
 
-  @Get('sample/:id')
-  getSampleData2(@Param('id') id: string, @Query('key') key: string) {
+  @Get(':id')
+  getSampleDataById(@Param('id') id: string, @Query('key') key: string) {
     return this.sampleApplication.getSampleData(id + key).then((res) => res);
   }
 }

@@ -41,7 +41,7 @@ const exceptionLogTransform: Transport = ratate(
 
 /**
  * カスタム項目用（サンプル）
- * ろくに動きません
+ * 特に意味ある情報は出力していない
  */
 const hostname = format((info, opts = {}) => {
   let value: string;
@@ -92,7 +92,7 @@ export class CustomLoggerService implements LoggerService {
     return format.combine(
       format.timestamp({ format: timezonedLocale }), // timestampを出力する
       format.splat(), // String interpolation splat for %d %s-style messages.
-      hostname(),
+      hostname({ alias: 'servername', hostname: 'test' }), // custom format,
       format.errors({ stack: true }),
       format.json(),
     );
