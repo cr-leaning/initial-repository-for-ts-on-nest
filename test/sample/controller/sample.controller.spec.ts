@@ -63,7 +63,7 @@ describe('SampleController', () => {
         .spyOn(sampleApplication, 'getSampleData')
         .mockImplementation(async () => expected);
 
-      sampleController.getSampleData2(key, param).then((result) => {
+      sampleController.getSampleDataById(key, param).then((result) => {
         expect(result).toBe(expected);
         expect(mcokSampleApplication).toBeCalledTimes(1);
         expect(mcokSampleApplication).toBeCalledWith(expect.anything());

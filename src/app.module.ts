@@ -5,11 +5,19 @@ import { CustomLoggerModule } from './logger/customlogger.module';
 import { APP_FILTER } from '@nestjs/core';
 import { AllExceptionsFilter } from './common/exception.filter';
 
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { CusutomLoggerMiddleware } from './logger/cusutomlogger.middleware';
+import { UsersModule } from './users/users.module';
+import { DeptsModule } from './depts/depts.module';
 
 @Module({
-  imports: [DummyModule, SampleModule, CustomLoggerModule],
+  imports: [
+    DummyModule,
+    SampleModule,
+    CustomLoggerModule,
+    UsersModule,
+    DeptsModule,
+  ],
   providers: [
     CustomLoggerService,
     {
