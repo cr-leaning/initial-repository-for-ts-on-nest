@@ -9,6 +9,8 @@ import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { CusutomLoggerMiddleware } from './logger/cusutomlogger.middleware';
 import { UsersModule } from './users/users.module';
 import { DeptsModule } from './depts/depts.module';
+import { GraphQLModule } from '@nestjs/graphql';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -17,6 +19,17 @@ import { DeptsModule } from './depts/depts.module';
     CustomLoggerModule,
     UsersModule,
     DeptsModule,
+    // https://stackoverflow.com/questions/68354656/unhandledpromiserejectionwarning-error-you-must-await-server-start-before/68354663#68354663
+    // GraphQLModule.forRoot({ autoSchemaFile: true, playground: true }),
+    // GraphQLModule.forRoot({
+    // debug: false,
+    // playground: true,
+    // typePaths: ['./**/*.graphql'],
+    // definitions: {
+    //   path: join(process.cwd(), 'src/graphql.ts'),
+    //   outputAs: 'class',
+    // },
+    // }),
   ],
   providers: [
     CustomLoggerService,
