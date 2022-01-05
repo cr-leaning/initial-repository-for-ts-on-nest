@@ -4,6 +4,7 @@
 * [NestJS の基礎概念の図解と要約](https://zenn.dev/morinokami/articles/nestjs-overview)
 * [Jest](https://jestjs.io/ja/docs/configuration)
 * [参考としたRepository](https://github.com/eryzerz/nestjs-ddd)
+* [class-validator](https://github.com/typestack/class-validator)
 
 
 ### 注意事項

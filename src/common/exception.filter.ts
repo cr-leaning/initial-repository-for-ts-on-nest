@@ -29,14 +29,10 @@ export class AllExceptionsFilter implements ExceptionFilter {
             stack: exception.stack,
           }
         : { status: HttpStatus.INTERNAL_SERVER_ERROR };
-    // const status =
-    //   exception instanceof HttpException
-    //     ? exception.getStatus()
-    //     : HttpStatus.INTERNAL_SERVER_ERROR;
 
-    // if (status >= 500) {
+    // if (ex.status >= 500) {
     //   this.logger.error({ request, response });
-    // } else if (status >= 400) {
+    // } else if (ex.status >= 400) {
     //   this.logger.warn({ request, response });
     // }
 
@@ -47,8 +43,13 @@ export class AllExceptionsFilter implements ExceptionFilter {
       path: request.url,
       stack: ex.stack,
     });
+    // if (ex.status >= 500) {
+    //   this.logger.error(response);
+    // }
     if (ex.status >= 500) {
-      this.logger.error(response);
+      this.logger.error({ ex });
+    } else if (ex.status >= 400) {
+      this.logger.warn({ ex });
     }
     this.logger.log('exec excepiton filter');
   }
