@@ -1,3 +1,5 @@
+import { SampleApiResponse } from 'src/infrastructure/client/response/sample.response';
+
 export class SampleData {
   readonly id: number;
 
@@ -23,3 +25,12 @@ export class SampleData {
     this.isValid = isValid;
   }
 }
+
+export const from = (apiResponse: SampleApiResponse): SampleData => {
+  return new SampleData({
+    id: apiResponse.id,
+    name: apiResponse.name,
+    comment: apiResponse.comment,
+    isValid: apiResponse.isValid,
+  });
+};
