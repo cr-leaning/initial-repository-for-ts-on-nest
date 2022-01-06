@@ -1,3 +1,3 @@
 export interface SampleApplication {
-  getSampleData(key: string): Promise<string>;
+  getSampleData(key: number): Promise<string>;
 }

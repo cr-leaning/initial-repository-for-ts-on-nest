@@ -14,7 +14,7 @@ export class SampleApplicationImpl implements SampleApplication {
     private readonly sampleService: SampleServiceImpl,
   ) {}
 
-  async getSampleData(key: string): Promise<string> {
+  async getSampleData(key: number): Promise<string> {
     return this.sampleService
       .getSampleData(key)
       .then((res) => res + ' application');

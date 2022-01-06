@@ -3,12 +3,12 @@ https://docs.nestjs.com/modules
 */
 
 import { Module } from '@nestjs/common';
-import { AppController } from '../dummy/contorller/app.controller';
-import { AppService } from '../dummy/service/app.service';
+import { DummyController } from './contorller/dummy.controller';
+import { DummyService } from './service/dummy.service';
 
 @Module({
   imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [DummyController],
+  providers: [DummyService],
 })
 export class DummyModule {}
