@@ -1,25 +1,30 @@
 export class SampleApiResponse {
-  readonly id: number;
+  id: number;
 
-  readonly name: string;
+  name: string;
 
-  readonly comment?: string;
+  comment?: string;
 
-  readonly isValid: boolean;
+  note?: string;
+
+  isValid: boolean;
   constructor({
     id,
     name,
     isValid,
     comment,
+    note,
   }: {
     id: number;
     name: string;
     isValid: boolean;
     comment?: string;
+    note?: string;
   }) {
     this.id = id;
     this.name = name;
     this.comment = comment;
     this.isValid = isValid;
+    this.note = note;
   }
 }
