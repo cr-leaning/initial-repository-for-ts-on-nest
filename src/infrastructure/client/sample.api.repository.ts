@@ -8,6 +8,7 @@ import { SampleRepository } from '../interface/client/sample.infrastracture.inte
 import * as superagent from 'superagent';
 import { SampleApiResponse } from './response/sample.response';
 import { CreateSampleApiRequest } from './request/create.sample.api.request';
+import { ApiClientException } from '../../exception/apiclient.exception';
 // const got = await import('./got.js')
 
 @Injectable()
@@ -30,6 +31,9 @@ export class SampleApiRepositoryImpl implements SampleRepository {
       .then((res) => {
         this.logger.log(JSON.stringify(res.body));
         return JSON.parse(JSON.stringify(res.body)) as SampleApiResponse;
+      })
+      .catch((reason) => {
+        throw new ApiClientException(reason);
       });
   }
 }

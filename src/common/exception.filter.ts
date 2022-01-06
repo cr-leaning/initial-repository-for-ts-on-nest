@@ -10,6 +10,7 @@ import {
   HttpStatus,
   Logger,
 } from '@nestjs/common';
+import { ApiClientException } from '../exception/apiclient.exception';
 import { timezonedLocale } from 'src/utils/date.utils';
 
 @Catch()
@@ -22,7 +23,14 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const request = ctx.getRequest();
 
     const ex =
-      exception instanceof HttpException
+      exception instanceof ApiClientException
+        ? {
+            status: exception.getStatus(),
+            message: exception.message,
+            stack: exception.stack,
+            reason: exception.reason,
+          }
+        : exception instanceof HttpException
         ? {
             status: exception.getStatus(),
             message: exception.message,
@@ -42,6 +50,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
       timestamp: timezonedLocale,
       path: request.url,
       stack: ex.stack,
+      reason: ex.reason,
     });
     // if (ex.status >= 500) {
     //   this.logger.error(response);
