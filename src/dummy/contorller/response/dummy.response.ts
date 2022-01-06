@@ -1,9 +1,11 @@
-export class SampleResponse {
+export class DummyResponse {
   readonly id: number;
 
   readonly name: string;
 
   readonly comment?: string;
+
+  readonly note?: string;
 
   readonly isValid: boolean;
   constructor({

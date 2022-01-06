@@ -1,3 +1,5 @@
+import { SampleData } from '../../domain/sample.domain';
+
 export interface SampleService {
-  getSampleData(key: string): Promise<string>;
+  getSampleData(key: number): Promise<SampleData>;
 }

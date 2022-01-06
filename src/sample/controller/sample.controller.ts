@@ -27,15 +27,10 @@ export class SampleController {
   ) {}
 
   @Get()
-  getSampleData(@Query('key') key: string) {
+  getSampleData(@Query('key') key: number) {
     this.logger.log({ 'sample key': key });
     this.logger.log('sample key:%s', key);
     return this.sampleApplication.getSampleData(key).then((res) => res);
-  }
-
-  @Get(':id')
-  getSampleDataById(@Param('id') id: string, @Query('key') key: string) {
-    return this.sampleApplication.getSampleData(id + key).then((res) => res);
   }
 
   @Post()
