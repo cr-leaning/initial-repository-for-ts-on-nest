@@ -6,16 +6,15 @@ import {
   Controller,
   Get,
   Query,
-  Param,
   Inject,
   Logger,
   Post,
   Body,
 } from '@nestjs/common';
+import { fromRequest } from '../domain/sample.domain';
 import { SampleApplication } from '../interface/applications/sample.application.interface';
 import { SAMPLE_TYPES } from '../interface/types';
 import { CreateSampleRequest } from './request/create.sample.request';
-import { SampleResponse } from './response/sample.response';
 
 @Controller('sample')
 export class SampleController {
@@ -27,7 +26,7 @@ export class SampleController {
   ) {}
 
   @Get()
-  getSampleData(@Query('key') key: number) {
+  get(@Query('key') key: number) {
     this.logger.log({ 'sample key': key });
     this.logger.log('sample key:%s', key);
     return this.sampleApplication.getSampleData(key).then((res) => res);
@@ -35,11 +34,6 @@ export class SampleController {
 
   @Post()
   store(@Body() request: CreateSampleRequest) {
-    return new SampleResponse({
-      id: 1,
-      name: request.name,
-      comment: request.comment,
-      isValid: request.isValid,
-    });
+    return this.sampleApplication.storeSampleData(fromRequest(request));
   }
 }

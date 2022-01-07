@@ -1,4 +1,5 @@
 import { SampleApiResponse } from 'src/infrastructure/client/response/sample.response';
+import { CreateSampleRequest } from '../controller/request/create.sample.request';
 
 export class SampleData {
   readonly id: number;
@@ -14,7 +15,7 @@ export class SampleData {
     isValid,
     comment,
   }: {
-    id: number;
+    id?: number;
     name: string;
     isValid: boolean;
     comment?: string;
@@ -26,11 +27,19 @@ export class SampleData {
   }
 }
 
-export const from = (apiResponse: SampleApiResponse): SampleData => {
+export const fromApiResponse = (apiResponse: SampleApiResponse): SampleData => {
   return new SampleData({
     id: apiResponse.id,
     name: apiResponse.name,
     comment: apiResponse.comment,
     isValid: apiResponse.isValid,
+  });
+};
+
+export const fromRequest = (request: CreateSampleRequest): SampleData => {
+  return new SampleData({
+    name: request.name,
+    comment: request.comment,
+    isValid: request.isValid,
   });
 };
