@@ -17,9 +17,11 @@ export class SampleApiRepositoryImpl implements SampleRepository {
   async store(request: CreateSampleApiRequest): Promise<number> {
     return await superagent
       .post('http://localhost:4000/dummy')
-      .send(JSON.stringify(request))
+      .set('X-API-Key', 'test')
+      .set('Accept', 'application/json')
+      .send(request)
       .then((res) => {
-        this.logger.log(JSON.stringify(res.body));
+        this.logger.log(res.body);
         return res.body;
       });
   }
@@ -27,9 +29,11 @@ export class SampleApiRepositoryImpl implements SampleRepository {
     this.logger.log('SampleApiRepositoryImpl :%s', id);
     return await superagent
       .get('http://localhost:4000/dummy')
+      .set('X-API-Key', 'test')
+      .set('Accept', 'application/json')
       .query({ key: id })
       .then((res) => {
-        this.logger.log(JSON.stringify(res.body));
+        this.logger.log(res);
         return JSON.parse(JSON.stringify(res.body)) as SampleApiResponse;
       })
       .catch((reason) => {

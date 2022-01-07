@@ -16,7 +16,7 @@ export class DummyController {
   }
 
   @Post()
-  store(@Body() request: CreateDummyRequest): number {
-    return this.appService.storeData(request);
+  store(@Body() request: CreateDummyRequest): any {
+    return JSON.stringify({ id: this.appService.storeData(request) });
   }
 }
