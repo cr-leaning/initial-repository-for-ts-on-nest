@@ -1,3 +1,46 @@
+# Node.js + NestJS + TypeScriptのサンプルプロジェクト
+
+## Description
+|Category | | Category | |
+|---|---|---|---|
+|API | :white_check_mark: | Database(R/W) | | Database(R/O) | :white_check_mark: |
+|External API | :white_check_mark: | Storage | | Migration SQL | :white_check_mark: |
+|Scheduler | | Batch Job | | Consumer | |
+|Producer | | Unit Test | :white_check_mark: | Integration Test | :white_check_mark: |
+
+
+## Teck Stack
+|Category | name |
+|---|---|
+| Language | TypeScript |
+| Exec Env | Node.js |
+| App FW | NestJs|
+| DB | - |
+| Test FW | JEST |
+| Logger | winston |
+| Http Client | superagent |
+
+## for dev
+### install
+init
+```
+yarn install
+```
+start service
+```
+yarn start
+```
+watch mode
+```
+yarn start:dev
+```
+run test
+```
+yarn test
+```
+
+## memo
+
 お試しで作成中。READMEは後ほど修正
 
 ### 理解に役立ちそうなリンク
