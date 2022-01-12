@@ -48,6 +48,7 @@ yarn test
 * [Jest](https://jestjs.io/ja/docs/configuration)
 * [参考としたRepository](https://github.com/eryzerz/nestjs-ddd)
 * [class-validator](https://github.com/typestack/class-validator)
+* [coifnguration](https://zenn.dev/waddy/articles/nestjs-configuration-service)
 
 
 ### 注意事項
