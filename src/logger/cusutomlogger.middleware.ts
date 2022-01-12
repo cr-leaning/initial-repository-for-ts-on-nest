@@ -20,6 +20,7 @@ export class CusutomLoggerMiddleware implements NestMiddleware {
 
       this.logger.log(
         body,
+        res.json,
         `${method} ${url} ${statusCode} ${contentLength} - ${userAgent} ${ip}`,
       );
     });

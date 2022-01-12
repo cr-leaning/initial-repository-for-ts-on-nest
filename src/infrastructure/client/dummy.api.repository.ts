@@ -3,18 +3,19 @@ https://docs.nestjs.com/providers#services
 */
 
 import { Injectable, Logger } from '@nestjs/common';
-import { SampleRepository } from '../interface/client/sample.infrastracture.interface';
+import { DummyRepository } from '../interface/client/dummy.infrastracture.interface';
 // import {SuperAgentStatic} from 'superagent';
 import * as superagent from 'superagent';
-import { SampleApiResponse } from './response/sample.response';
-import { CreateSampleApiRequest } from './request/create.sample.api.request';
+import { DummyApiResponse } from './response/dummy.response';
+import { CreateDummyApiRequest } from './request/create.dummy.api.request';
 import { ApiClientException } from '../../exception/apiclient.exception';
+import { CreateDummyApiResponse } from './response/create.dummy.response';
 // const got = await import('./got.js')
 
 @Injectable()
-export class SampleApiRepositoryImpl implements SampleRepository {
+export class DummyApiRepositoryImpl implements DummyRepository {
   private readonly logger = new Logger();
-  async store(request: CreateSampleApiRequest): Promise<number> {
+  async store(request: CreateDummyApiRequest): Promise<CreateDummyApiResponse> {
     return await superagent
       .post('http://localhost:4000/dummy')
       .set('X-API-Key', 'test')
@@ -22,10 +23,10 @@ export class SampleApiRepositoryImpl implements SampleRepository {
       .send(request)
       .then((res) => {
         this.logger.log(res.body);
-        return res.body;
+        return res.body as CreateDummyApiResponse;
       });
   }
-  async get(id: number): Promise<SampleApiResponse> {
+  async get(id: number): Promise<DummyApiResponse> {
     this.logger.log('SampleApiRepositoryImpl :%s', id);
     return await superagent
       .get('http://localhost:4000/dummy')
@@ -34,7 +35,7 @@ export class SampleApiRepositoryImpl implements SampleRepository {
       .query({ key: id })
       .then((res) => {
         this.logger.log(res);
-        return JSON.parse(JSON.stringify(res.body)) as SampleApiResponse;
+        return JSON.parse(JSON.stringify(res.body)) as DummyApiResponse;
       })
       .catch((reason) => {
         throw new ApiClientException(reason);

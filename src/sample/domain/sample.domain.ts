@@ -1,4 +1,5 @@
-import { SampleApiResponse } from 'src/infrastructure/client/response/sample.response';
+import { CreateDummyApiResponse } from '../../infrastructure/client/response/create.dummy.response';
+import { DummyApiResponse } from '../../infrastructure/client/response/dummy.response';
 import { CreateSampleRequest } from '../controller/request/create.sample.request';
 
 export class SampleData {
@@ -16,8 +17,8 @@ export class SampleData {
     comment,
   }: {
     id?: number;
-    name: string;
-    isValid: boolean;
+    name?: string;
+    isValid?: boolean;
     comment?: string;
   }) {
     this.id = id;
@@ -27,19 +28,24 @@ export class SampleData {
   }
 }
 
-export const fromApiResponse = (apiResponse: SampleApiResponse): SampleData => {
-  return new SampleData({
+export const fromApiResponse = (apiResponse: DummyApiResponse): SampleData =>
+  new SampleData({
     id: apiResponse.id,
     name: apiResponse.name,
     comment: apiResponse.comment,
     isValid: apiResponse.isValid,
   });
-};
 
-export const fromRequest = (request: CreateSampleRequest): SampleData => {
-  return new SampleData({
+export const fromCreateApiResponse = (
+  apiResponse: CreateDummyApiResponse,
+): SampleData =>
+  new SampleData({
+    id: apiResponse.id,
+  });
+
+export const fromRequest = (request: CreateSampleRequest): SampleData =>
+  new SampleData({
     name: request.name,
     comment: request.comment,
     isValid: request.isValid,
   });
-};
