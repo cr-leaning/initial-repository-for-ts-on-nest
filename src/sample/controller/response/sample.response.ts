@@ -1,3 +1,5 @@
+import { SampleData } from 'src/sample/domain/sample.domain';
+
 export class SampleResponse {
   readonly id: number;
 
@@ -13,8 +15,8 @@ export class SampleResponse {
     comment,
   }: {
     id: number;
-    name: string;
-    isValid: boolean;
+    name?: string;
+    isValid?: boolean;
     comment?: string;
   }) {
     this.id = id;
@@ -23,3 +25,16 @@ export class SampleResponse {
     this.isValid = isValid;
   }
 }
+
+export const fromModel = (model: SampleData): SampleResponse =>
+  new SampleResponse({
+    id: model.id,
+    name: model.name,
+    comment: model.comment,
+    isValid: model.isValid,
+  });
+
+export const fromId = (id: number): SampleResponse =>
+  new SampleResponse({
+    id: id,
+  });

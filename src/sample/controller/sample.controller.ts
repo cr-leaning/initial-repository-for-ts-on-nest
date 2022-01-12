@@ -15,6 +15,7 @@ import { fromRequest } from '../domain/sample.domain';
 import { SampleApplication } from '../interface/applications/sample.application.interface';
 import { SAMPLE_TYPES } from '../interface/types';
 import { CreateSampleRequest } from './request/create.sample.request';
+import { fromId, fromModel, SampleResponse } from './response/sample.response';
 
 @Controller('sample')
 export class SampleController {
@@ -26,14 +27,18 @@ export class SampleController {
   ) {}
 
   @Get()
-  get(@Query('key') key: number) {
+  async get(@Query('key') key: number) {
     this.logger.log({ 'sample key': key });
     this.logger.log('sample key:%s', key);
-    return this.sampleApplication.getSampleData(key).then((res) => res);
+    return this.sampleApplication
+      .getSampleData(key)
+      .then((res) => fromModel(res));
   }
 
   @Post()
-  store(@Body() request: CreateSampleRequest) {
-    return this.sampleApplication.storeSampleData(fromRequest(request));
+  async store(@Body() request: CreateSampleRequest) {
+    return this.sampleApplication
+      .storeSampleData(fromRequest(request))
+      .then((res) => fromModel(res));
   }
 }

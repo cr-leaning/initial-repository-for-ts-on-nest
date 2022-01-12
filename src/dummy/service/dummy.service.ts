@@ -4,7 +4,7 @@ import { DummyResponse } from '../contorller/response/dummy.response';
 
 @Injectable()
 export class DummyService {
-  getData(key: number): DummyResponse {
+  async getData(key: number): Promise<DummyResponse> {
     return new DummyResponse({
       id: key,
       name: 'dummyData',
@@ -13,7 +13,7 @@ export class DummyService {
     });
   }
 
-  storeData(request: CreateDummyRequest): number {
+  async storeData(request: CreateDummyRequest): Promise<number> {
     return Math.floor(Math.random() * 1001);
   }
 }

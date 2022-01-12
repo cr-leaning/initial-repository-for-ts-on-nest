@@ -14,7 +14,7 @@ export class SampleApplicationImpl implements SampleApplication {
     @Inject(SAMPLE_TYPES.services.SampleService)
     private readonly sampleService: SampleServiceImpl,
   ) {}
-  async storeSampleData(model: SampleData): Promise<number> {
+  async storeSampleData(model: SampleData): Promise<SampleData> {
     return this.sampleService.storeSampleData(model);
   }
 

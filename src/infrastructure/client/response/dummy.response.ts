@@ -1,4 +1,4 @@
-export class SampleApiResponse {
+export class DummyApiResponse {
   id: number;
 
   name: string;
