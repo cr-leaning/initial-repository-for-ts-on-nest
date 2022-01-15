@@ -10,12 +10,13 @@ import {
   HttpStatus,
   Logger,
 } from '@nestjs/common';
+import { DateUtilsService } from 'src/utils/service/date.utils.service';
 import { ApiClientException } from '../exception/apiclient.exception';
-import { timezonedLocale } from 'src/utils/date.utils';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
   private readonly logger = new Logger();
+  constructor(private readonly dateUtils: DateUtilsService) {}
 
   catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
@@ -47,7 +48,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     response.status(ex.status).json({
       statusCode: ex.status,
       message: ex.message,
-      timestamp: timezonedLocale,
+      timestamp: this.dateUtils.timezonedLocale,
       path: request.url,
       stack: ex.stack,
       reason: ex.reason,

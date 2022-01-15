@@ -1,3 +1,4 @@
+import { UtilsModule } from './utils/utils.module';
 import { EnvModule } from './env/env.module';
 import { CustomLoggerService } from './logger/customLogger.service';
 import { DummyModule } from './dummy/dummy.module';
@@ -14,11 +15,12 @@ import { join } from 'path';
 
 @Module({
   imports: [
-    EnvModule,
     DummyModule,
     SampleModule,
     CustomLoggerModule,
     UsersModule,
+    UtilsModule,
+    EnvModule,
     // https://stackoverflow.com/questions/68354656/unhandledpromiserejectionwarning-error-you-must-await-server-start-before/68354663#68354663
     // GraphQLModule.forRoot({ autoSchemaFile: true, playground: true }),
     // GraphQLModule.forRoot({
