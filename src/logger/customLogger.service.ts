@@ -1,7 +1,7 @@
 import { Injectable, LoggerService, Scope } from '@nestjs/common';
 import { Format } from 'logform';
 import { SERVICE_NAME } from 'src/constants/constats';
-import { timezonedLocale } from 'src/utils/date.utils';
+import { DateUtilsService } from 'src/utils/service/date.utils.service';
 import { createLogger, format, Logger, transports } from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
 import Transport from 'winston-transport';
@@ -62,10 +62,11 @@ const hostname = format((info, opts = {}) => {
 });
 
 // @Injectable({ scope: Scope.TRANSIENT })
+@Injectable()
 export class CustomLoggerService implements LoggerService {
   logger: Logger;
 
-  constructor() {
+  constructor(private readonly dateUtils: DateUtilsService) {
     this.logger = createLogger({
       level: 'info',
       format: this.logFormat(),
@@ -89,8 +90,9 @@ export class CustomLoggerService implements LoggerService {
   }
 
   logFormat(): Format {
+    const timestamp = this.dateUtils.timezonedLocale;
     return format.combine(
-      format.timestamp({ format: timezonedLocale }), // timestampを出力する
+      format.timestamp({ format: timestamp }), // timestampを出力する
       format.splat(), // String interpolation splat for %d %s-style messages.
       hostname({ alias: 'servername', hostname: 'test' }), // custom format,
       format.errors({ stack: true }),
