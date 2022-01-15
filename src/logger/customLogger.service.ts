@@ -3,8 +3,8 @@ import { Format } from 'logform';
 import { SERVICE_NAME } from 'src/constants/constats';
 import { timezonedLocale } from 'src/utils/date.utils';
 import { createLogger, format, Logger, transports } from 'winston';
-import * as DailyRotateFile from 'winston-daily-rotate-file';
-import * as Transport from 'winston-transport';
+import DailyRotateFile from 'winston-daily-rotate-file';
+import Transport from 'winston-transport';
 
 const ratate = (transport: Transport): Transport =>
   // eslint-disable-next-line @typescript-eslint/no-empty-function

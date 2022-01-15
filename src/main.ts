@@ -1,6 +1,7 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { EnvGeneralService } from './env/service/env.general.service';
 import { CustomLoggerService } from './logger/customLogger.service';
 
 async function bootstrap() {
@@ -10,6 +11,7 @@ async function bootstrap() {
   });
   app.useLogger(app.get(CustomLoggerService));
   app.useGlobalPipes(new ValidationPipe());
-  await app.listen(3000);
+  const env = app.get(EnvGeneralService);
+  await app.listen(env.Port);
 }
 bootstrap();
