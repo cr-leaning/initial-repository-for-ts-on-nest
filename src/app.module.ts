@@ -1,6 +1,7 @@
+import { SessionModule } from './session/session.module';
 import { UtilsModule } from './utils/utils.module';
 import { EnvModule } from './env/env.module';
-import { CustomLoggerService } from './logger/customLogger.service';
+import { CustomLoggerService } from './logger/customlogger.service';
 import { DummyModule } from './dummy/dummy.module';
 import { SampleModule } from './sample/sample.module';
 import { CustomLoggerModule } from './logger/customlogger.module';
@@ -12,9 +13,11 @@ import { CusutomLoggerMiddleware } from './logger/cusutomlogger.middleware';
 import { UsersModule } from './users/users.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
+import { SessionService } from './session/session.service';
 
 @Module({
   imports: [
+    SessionModule,
     DummyModule,
     SampleModule,
     CustomLoggerModule,
@@ -34,6 +37,7 @@ import { join } from 'path';
     // }),
   ],
   providers: [
+    SessionService,
     CustomLoggerService,
     {
       provide: APP_FILTER,

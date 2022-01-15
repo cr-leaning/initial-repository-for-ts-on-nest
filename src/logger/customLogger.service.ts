@@ -100,27 +100,27 @@ export class CustomLoggerService implements LoggerService {
     );
   }
 
-  info(message: string, ...option: any[]) {
+  info(message: any, ...option: any[]) {
     this.log(message, option);
   }
 
-  log(message: string, ...option: any[]) {
+  log(message: any, ...option: any[]) {
     this.logger.info(message, option);
   }
 
-  error(message: string, ...option: any[]) {
+  error(message: any, ...option: any[]) {
     this.logger.error(message, option);
   }
 
-  warn(message: string, ...option: any[]) {
+  warn(message: any, ...option: any[]) {
     this.logger.warn(message, option);
   }
 
-  debug(message: string, ...option: any[]) {
+  debug(message: any, ...option: any[]) {
     this.logger.debug(message, option);
   }
 
-  verbose(message: string, ...option: any[]) {
+  verbose(message: any, ...option: any[]) {
     this.logger.verbose(message, option);
   }
 }

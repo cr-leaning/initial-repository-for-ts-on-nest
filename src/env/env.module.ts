@@ -1,3 +1,5 @@
+import { EnvSessionService } from './service/env.session.service';
+import { EnvRedisService } from './service/env.redis.service';
 import { EnvDummyApiService } from './service/env.dummpyapi.service';
 import { EnvGeneralService } from './service/env.general.service';
 /*
@@ -11,7 +13,17 @@ import { ConfigModule } from '@nestjs/config';
 @Module({
   // TODO: add validate
   imports: [ConfigModule.forRoot({ envFilePath: ['.env.development'] })],
-  exports: [EnvDummyApiService, EnvGeneralService],
-  providers: [EnvDummyApiService, EnvGeneralService],
+  providers: [
+    EnvSessionService,
+    EnvRedisService,
+    EnvDummyApiService,
+    EnvGeneralService,
+  ],
+  exports: [
+    EnvSessionService,
+    EnvRedisService,
+    EnvDummyApiService,
+    EnvGeneralService,
+  ],
 })
 export class EnvModule {}
