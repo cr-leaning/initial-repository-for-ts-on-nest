@@ -1,3 +1,4 @@
+import { EnvModule } from './env/env.module';
 import { CustomLoggerService } from './logger/customLogger.service';
 import { DummyModule } from './dummy/dummy.module';
 import { SampleModule } from './sample/sample.module';
@@ -13,6 +14,7 @@ import { join } from 'path';
 
 @Module({
   imports: [
+    EnvModule,
     DummyModule,
     SampleModule,
     CustomLoggerModule,
