@@ -2,12 +2,11 @@
 https://docs.nestjs.com/exception-filters#custom-exceptions
 */
 
-import { HttpException, HttpStatus } from '@nestjs/common';
+import { ERROR_MESSAGE } from 'src/constants/error.constants';
+import { BaseApiException } from './baseapi.exception';
 
-export class ApiClientException extends HttpException {
-  readonly reason: any;
-  constructor({ reason }: { reason: any }) {
-    super('ApiClientException', HttpStatus.INTERNAL_SERVER_ERROR);
-    this.reason = reason;
+export class ApiClientException extends BaseApiException {
+  constructor({ reason }: { reason: string }) {
+    super({ error: ERROR_MESSAGE.UNEXPECTED_ERROR, reason: reason });
   }
 }

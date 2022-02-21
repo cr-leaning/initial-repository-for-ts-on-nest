@@ -8,7 +8,7 @@ import { NextFunction, Request, response, Response } from 'express';
 
 @Injectable()
 export class CusutomLoggerMiddleware implements NestMiddleware {
-  private readonly logger = new Logger();
+  private readonly logger = new Logger(CusutomLoggerMiddleware.name);
 
   use(req: Request, res: Response, next: NextFunction) {
     const { ip, method, path: url, body } = req;

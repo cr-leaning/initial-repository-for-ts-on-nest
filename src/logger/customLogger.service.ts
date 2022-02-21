@@ -1,4 +1,4 @@
-import { Injectable, LoggerService, Scope } from '@nestjs/common';
+import { Injectable, LoggerService } from '@nestjs/common';
 import { Format } from 'logform';
 import { SERVICE_NAME } from 'src/constants/constats';
 import { DateUtilsService } from 'src/utils/service/date.utils.service';

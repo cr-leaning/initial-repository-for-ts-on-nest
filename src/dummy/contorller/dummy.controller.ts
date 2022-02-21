@@ -1,5 +1,4 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
-import { Logger } from 'typedoc';
+import { Body, Controller, Get, Logger, Post, Query } from '@nestjs/common';
 import { DummyService } from '../service/dummy.service';
 import { CreateDummyRequest } from './request/create.dummy.request';
 import { CreateDummyResponse } from './response/create.dummy.response';
@@ -7,7 +6,7 @@ import { DummyResponse } from './response/dummy.response';
 
 @Controller('dummy')
 export class DummyController {
-  private readonly logger = new Logger();
+  private readonly logger = new Logger(DummyController.name);
   constructor(private readonly appService: DummyService) {}
 
   @Get()
