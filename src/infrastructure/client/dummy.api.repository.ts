@@ -17,7 +17,7 @@ const ACCEPT = 'accept';
 
 @Injectable()
 export class DummyApiRepositoryImpl implements DummyRepository {
-  private readonly logger = new Logger();
+  private readonly logger = new Logger(DummyApiRepositoryImpl.name);
   constructor(private readonly dummyEnv: EnvDummyApiService) {}
 
   async store(request: CreateDummyApiRequest): Promise<CreateDummyApiResponse> {

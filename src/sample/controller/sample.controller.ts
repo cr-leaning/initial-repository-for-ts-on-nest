@@ -15,11 +15,11 @@ import { fromRequest } from '../domain/sample.domain';
 import { SampleApplication } from '../interface/applications/sample.application.interface';
 import { SAMPLE_TYPES } from '../interface/types';
 import { CreateSampleRequest } from './request/create.sample.request';
-import { fromId, fromModel, SampleResponse } from './response/sample.response';
+import { fromModel } from './response/sample.response';
 
 @Controller('sample')
 export class SampleController {
-  private readonly logger = new Logger();
+  private readonly logger = new Logger(SampleController.name);
 
   constructor(
     @Inject(SAMPLE_TYPES.applications.SampleApplication)

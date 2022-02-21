@@ -14,7 +14,7 @@ import { SampleService } from '../interface/service/sample.service.interface';
 
 @Injectable()
 export class SampleServiceImpl implements SampleService {
-  private readonly logger = new Logger();
+  private readonly logger = new Logger(SampleServiceImpl.name);
   constructor(
     @Inject(INFRASTRACTURE_TYPES.repository.DummyRepository)
     private readonly sampleReposiroty: DummyRepository, // private readonly logger: CustomLoggerService,
