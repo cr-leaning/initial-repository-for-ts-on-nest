@@ -1,10 +1,5 @@
-/*
-https://docs.nestjs.com/providers#services
-*/
-
 import { Injectable, Logger } from '@nestjs/common';
 import { DummyRepository } from '../interface/client/dummy.infrastracture.interface';
-// import {SuperAgentStatic} from 'superagent';
 import * as superagent from 'superagent';
 import { DummyApiResponse } from './response/dummy.response';
 import { CreateDummyApiRequest } from './request/create.dummy.api.request';
@@ -21,7 +16,7 @@ export class DummyApiRepositoryImpl implements DummyRepository {
   constructor(private readonly dummyEnv: EnvDummyApiService) {}
 
   async store(request: CreateDummyApiRequest): Promise<CreateDummyApiResponse> {
-    return await superagent
+    return superagent
       .post(`${this.dummyEnv.Url}${this.dummyEnv.Endpoint}`)
       .set(X_API_KEY, this.dummyEnv.ApiKey)
       .set(ACCEPT, this.dummyEnv.Accept)
@@ -34,7 +29,7 @@ export class DummyApiRepositoryImpl implements DummyRepository {
 
   async get(id: number): Promise<DummyApiResponse> {
     this.logger.log('SampleApiRepositoryImpl :%s', id);
-    return await superagent
+    return superagent
       .get(`${this.dummyEnv.Url}${this.dummyEnv.Endpoint}`)
       .set(X_API_KEY, this.dummyEnv.ApiKey)
       .set(ACCEPT, this.dummyEnv.Accept)

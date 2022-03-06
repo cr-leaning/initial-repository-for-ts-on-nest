@@ -1,7 +1,3 @@
-/*
-https://docs.nestjs.com/exception-filters#exception-filters-1
-*/
-
 import {
   ExceptionFilter,
   Catch,
@@ -13,7 +9,6 @@ import {
 } from '@nestjs/common';
 import { ERROR_MESSAGE } from 'src/constants/error.constants';
 import { BaseApiException } from 'src/exception/baseapi.exception';
-import { DateUtilsService } from 'src/utils/service/date.utils.service';
 
 type ErrorInfo = {
   status: number;

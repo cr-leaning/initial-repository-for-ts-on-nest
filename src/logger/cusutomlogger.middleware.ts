@@ -1,10 +1,6 @@
-/*
-https://docs.nestjs.com/middleware#middleware
-*/
-
 import { Injectable, Logger, NestMiddleware } from '@nestjs/common';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { NextFunction, Request, response, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 @Injectable()
 export class CusutomLoggerMiddleware implements NestMiddleware {
