@@ -22,14 +22,17 @@ export class AllExceptionsFilter implements ExceptionFilter {
   private readonly logger = new Logger(AllExceptionsFilter.name);
 
   catch(exception: Error, host: ArgumentsHost) {
+    this.logger.log('exec excepiton filter catch');
     const ex: ErrorInfo = this.convertErrorInfo(exception);
     if (ex.status >= HttpStatus.INTERNAL_SERVER_ERROR) {
+      this.logger.log('exec excepiton filter error');
       this.logger.error({
         message: ex.message,
         stack: ex.stack,
         context: ex.response,
       });
     } else {
+      this.logger.log('exec excepiton filter warn');
       this.logger.warn({ message: ex.message, context: ex.response });
     }
     this.logger.log('exec excepiton filter');
@@ -59,8 +62,8 @@ export class AllExceptionsFilter implements ExceptionFilter {
         message: exception.message,
         stack: exception.stack,
         response: {
-          code: ERROR_MESSAGE.BADREQUEST_ERROR.code,
-          message: ERROR_MESSAGE.BADREQUEST_ERROR.message,
+          code: ERROR_MESSAGE.VALIDATION_ERROR.code,
+          message: ERROR_MESSAGE.VALIDATION_ERROR.message,
           reason: this.getMessage(exception),
         },
       };
@@ -95,9 +98,13 @@ export class AllExceptionsFilter implements ExceptionFilter {
    * @returns message
    */
   private getMessage(exception: BadRequestException): string {
-    if (exception.getResponse() && exception.getResponse()['message']) {
-      return exception.getResponse()['message'];
-    } else {
+    try {
+      if (exception.getResponse() && exception.getResponse()['message']) {
+        return exception.getResponse()['message'];
+      } else {
+        return exception.message;
+      }
+    } catch {
       return exception.message;
     }
   }

@@ -1,58 +1,76 @@
-# Node.js + NestJS + TypeScriptのサンプルプロジェクト
+# Node.js + NestJS + TypeScript のサンプルプロジェクト
 
 ## Description
-|Category | | Category | |
-|---|---|---|---|
-|API | :white_check_mark: | Database(R/W) | | Database(R/O) | :white_check_mark: |
-|External API | :white_check_mark: | Storage | | Migration SQL | :white_check_mark: |
-|Scheduler | | Batch Job | | Consumer | |
-|Producer | | Unit Test | :white_check_mark: | Integration Test | :white_check_mark: |
 
+| Category     |                    | Category      |                    | Category         |                    |
+| ------------ | ------------------ | ------------- | ------------------ | ---------------- | ------------------ |
+| API          | :white_check_mark: | Database(R/W) |                    | Database(R/O)    |                    |
+| External API | :white_check_mark: | Storage       |                    | Migration SQL    |                    |
+| Scheduler    |                    | Batch Job     |                    | Consumer         |                    |
+| Producer     |                    | Unit Test     | :white_check_mark: | Integration Test | :white_check_mark: |
+| Chache       | :white_check_mark: |
 
 ## Teck Stack
-|Category | name |
-|---|---|
-| Language | TypeScript |
-| Exec Env | Node.js |
-| App FW | NestJs|
-| DB | - |
-| Test FW | JEST |
-| Logger | winston |
+
+| Category    | name       |
+| ----------- | ---------- |
+| Language    | TypeScript |
+| Exec Env    | Node.js    |
+| App FW      | NestJs     |
+| DB          | -          |
+| Chache      | redis      |
+| Test FW     | JEST       |
+| Logger      | winston    |
 | Http Client | superagent |
 
+## prepare
+
+install redis
+[for windows](https://github.com/MicrosoftArchive/redis/releases)
+
 ## for dev
+
 ### install
+
 init
+
 ```
 yarn install
 ```
+
 start service
+
 ```
 yarn start
 ```
+
 watch mode
+
 ```
 yarn start:dev
 ```
+
 run test
+
 ```
 yarn test
 ```
 
 ## memo
 
-お試しで作成中。READMEは後ほど修正
+お試しで作成中。README は後ほど修正
 
 ### 理解に役立ちそうなリンク
-* [NestJS の基礎概念の図解と要約](https://zenn.dev/morinokami/articles/nestjs-overview)
-* [Jest](https://jestjs.io/ja/docs/configuration)
-* [参考としたRepository](https://github.com/eryzerz/nestjs-ddd)
-* [class-validator](https://github.com/typestack/class-validator)
-* [coifnguration](https://zenn.dev/waddy/articles/nestjs-configuration-service)
 
+- [NestJS の基礎概念の図解と要約](https://zenn.dev/morinokami/articles/nestjs-overview)
+- [Jest](https://jestjs.io/ja/docs/configuration)
+- [参考とした Repository](https://github.com/eryzerz/nestjs-ddd)
+- [class-validator](https://github.com/typestack/class-validator)
+- [coifnguration](https://zenn.dev/waddy/articles/nestjs-configuration-service)
 
 ### 注意事項
-CI/CDを考慮してyarnで作ります。
+
+CI/CD を考慮して yarn で作ります。
 
 **以下はデフォルト**
 
